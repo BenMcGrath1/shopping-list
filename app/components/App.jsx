@@ -87,6 +87,7 @@ class ShoppingList extends React.Component {
 export default class App extends React.Component {
   render() {
     return <ShoppingList />;
+    console.log('test'); 
   }
 }
 
