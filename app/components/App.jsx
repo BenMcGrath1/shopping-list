@@ -14,9 +14,10 @@ class ShoppingList extends React.Component {
 		super(props);
 		this.state = {
 			products: [
-						{name: 'milk', sku: '23490234b30234b', price: '$3.99'},
-						{name: 'bread', sku: '123431001b4', price: '$1.99'},
-					]
+						{name: 'milk', sku: '23490234b30234b', price: '3.99'},
+						{name: 'bread', sku: '123431001b4', price: '1.99'},
+					],
+			total: 0
 		}
 	}
 
@@ -28,7 +29,8 @@ class ShoppingList extends React.Component {
 
 	    //Attempt to validate newProduct contains a value (not empty)
 	    newProduct !== {name: '', sku: '', price: ''} && this.setState({    
-	    	products: [...this.state.products, newProduct]
+	    	products: [...this.state.products, newProduct],
+	    	//total: parseFloat(this.state.total) + parseFloat(newProduct.price)
 	    })
 	    this.addForm.reset(); 
   	}
@@ -42,6 +44,14 @@ class ShoppingList extends React.Component {
   		this.setState({
   			products: [...newProducts]
   		})
+  	}
+
+  	getTotal() {
+  		var total = 0; 
+  		for (var i = 0; i < this.state.products.length; i++) {
+  			total += parseFloat(this.state.products[i].price); 
+  		}
+  		return total; 
   	}
 
 	render() {
@@ -68,6 +78,7 @@ class ShoppingList extends React.Component {
 		          <button type="submit" className="btn btn-primary">Add to List</button>
 		        </form>
 		      </div>
+
 				<ul className="list wrapper">{this.state.products.map(product =>
 					<li key={product.sku}>
 						<div className="list-item">
@@ -78,6 +89,10 @@ class ShoppingList extends React.Component {
 					</li>
 				)}
 				</ul>
+
+				<div className="total">
+					<p>{"$" + this.getTotal()}</p>			
+				</div>
 			</div>
 		); 
 	}; 
